@@ -10,6 +10,9 @@ java -Xmx8g -jar snpEff.jar -v -stats autosomes_dadi_061224.html BROADS1.105 aut
 #Retain synonymous sites
 java -jar SnpSift.jar filter \ "EFF[0].EFFECT = 'synonymous_variant'" -f autosomes_snpeff_demog_061224.vcf > autosomes_snpeff_dadi_061224_synon.vcf
 
-#liftover this file back to the stickleback v5 assembly. Use this vcf for ancestral allele annotation. 
+#liftover this file back to the stickleback v5 assembly.
 CrossMap vcf v1_to_v5.chain.txt autosomes_snpeff_dadi_061224_synon.vcf stickleback_v5_assembly.fa autosomes_snpeff_dadi_061224_synon_v5.liftover.vcf
+
+#Remove XIX (X chromosome) from vcf of synonymous snps. Use this vcf for ancestral allele annotation in fastdfe. 
+vcftools --gzvcf autosomes_snpeff_dadi_061224_synon_v5.liftover.vcf --out for_fastdfe_synon_autosomes_no_XIX --not-chr chrXIX --recode
 
