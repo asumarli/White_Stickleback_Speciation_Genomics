@@ -3,7 +3,7 @@
 library(tidyverse)
 library(stringr)
 
-#Autosomes
+#Autosomes. Repeat for X and Y. Then combine. 
 # Read in pairwise Fst for each pair. Use fst to calculate T for each pair.
 # First do white_common
 white_common <- read.table(file = "PBS/white_common_fst.txt.weir.fst", header = TRUE)
@@ -14,7 +14,7 @@ white_common <- white_common %>%
   filter(!CHROM == "chrXIX") %>%
   mutate(white_common_fst = replace(white_common_fst, white_common_fst < 0 , 0))
 
-#Calculate T (divergnece time) between white and common
+#Calculate T between white and common
 white_common <- white_common %>%
   mutate(white_common_T = -log(1 - white_common_fst))
 
