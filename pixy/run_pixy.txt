@@ -1,0 +1,24 @@
+#Run pixy for autosomes, X, and Y
+
+#Autosomes
+pixy --stats pi fst dxy \
+--vcf for_pixy_CB_CL_autosomes_020825.vcf.gz \
+--populations CB_CL_meta.txt \
+--window_size 50000 \
+--n_cores 10 
+
+#X chr
+pixy --stats pi fst dxy \
+--vcf for_pixy_CB_CL_XIX_fem.vcf.gz \
+--populations CB_CL_fem_meta.txt \
+--window_size 50000 \
+--n_cores 10 \
+--chromosomes 'XIX'
+
+#Y chr
+pixy --stats pi fst dxy \
+--vcf for_pixy_CB_CL_Y_no_het_hap.vcf.gz \
+--populations male_samples.txt \
+--window_size 50000 \
+--n_cores 10 \
+--chromosomes 'Y'
