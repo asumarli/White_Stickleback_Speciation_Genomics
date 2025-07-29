@@ -1,1 +1,2 @@
-
+#Remove outgroup (G. wheatlandi) from polarized vcf.
+for_dadi_synon_auto_aa.vcf 
