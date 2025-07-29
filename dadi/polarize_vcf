@@ -1,6 +1,3 @@
-#Remove XIX (X chromosome) from vcf of synonymous snps.
-vcftools --gzvcf --out for_fastdfe_synon_autosomes_no_XIX --not-chr chrXIX --recode
-
 ### Polarize vcf in fastdfe 
 #Activate conda environment and then run python
 conda activate fastdfe
