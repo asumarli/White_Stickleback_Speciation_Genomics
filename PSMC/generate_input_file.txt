@@ -1,0 +1,16 @@
+#Generate PSMC input files
+
+#Extract only the autosomes and chrX (chr19 in GAAC) from the bam file
+samtools view ~/bigdata/Project_KSGL_Nova655P_Lucas/male_samples_XY/dedup/MCL13_S4_L002-1.bam chrI chrII chrIII chrIV chrV chrVI chrVII chrVIII chrIX chrX chrXI chrXII chrXIII chrXIV chrXV chrXVI chrXVII chrXVIII chrXIX chrXX chrXXI chrUn -b > MCL13_S4_L002_autosomes.bam
+
+#Generate input files for PSMC
+bcftools mpileup -C50 -f ~/bigdata/grenepipe_test/male_ref_PAR_Ns.fa MCL13_S4_L002_autosomes.bam | bcftools call -c - | vcfutils.pl vcf2fq -d 30 -D 72 | gzip $
+  
+~/bigdata/PSMC/psmc/utils/fq2psmcfa -q20 MCL13_S4.fq.gz > MCL13_S4.psmcfa
+
+# Run PSMC using default settings and plot
+~/bigdata/PSMC/psmc/./psmc -N25 -t15 -r5 -p "4+25*2+4+6" -o MCL13_S4.psmc MCL13_S4.psmcfa
+~/bigdata/PSMC/psmc/utils/psmc_plot.pl -u 3.7e-8 -g 1 -R -p MCL13_S4_plot MCL13_S4.psmc
+
+#Repeat for the other 3 individuals. 
+
