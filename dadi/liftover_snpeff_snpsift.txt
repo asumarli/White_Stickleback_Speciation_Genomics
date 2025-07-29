@@ -1,1 +1,17 @@
+###Annotating vcf for dadi-cli
+# Retain only synonymous sites in vcf.
+# Make sure vcf is compressed
+# Need to liftover v5 reference to v1
+
+CrossMap vcf v5_to_v1.chain.txt ../autosomes/filt_for_dadi_autosomes_CB_CL_wheat_031524.vcf.gz /Users/alexandrasumarli/Desktop/White_sticklebak_wgs_vcfs/Gasterosteus_aculeatus.BROADS1.dna_sm.toplevel.fa autosomes_for_dadi.liftover.vcf
+
+#use SNPeff to get functional annotations
+java -Xmx8g -jar snpEff.jar -v -stats autosomes_dadi_031524.html BROADS1.105 /Users/alexandrasumarli/Desktop/White_sticklebak_wgs_vcfs/reformatted_for_dadi_CB_CL_wheat_031424/liftover/autosomes_for_dadi.liftover.vcf > autosomes_snpeff_dadi_031524.vcf
+
+#Retain synonymous sites
+java -jar SnpSift.jar filter \ "EFF[0].EFFECT = 'synonymous_variant'" -f autosomes_snpeff_dadi_031524.vcf > autosomes_snpeff_dadi_060324_synon.vcf
+
+
+#liftover this file back to the stickleback v5 assembly
+liftover % CrossMap.py vcf v1_to_v5.chain.txt autosomes_snpeff_dadi_031524_synon.vcf ~/Desktop/White_sticklebak_wgs_vcfs/stickleback_v5_assembly.fa autosomes_snpeff_dadi_031524_synon_v5.liftover.vcf
 
