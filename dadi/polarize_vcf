@@ -1,1 +1,20 @@
+#Remove XIX (X chromosome) from vcf of synonymous snps.
+vcftools --gzvcf --out for_fastdfe_synon_autosomes_no_XIX --not-chr chrXIX --recode
 
+### Polarize vcf in fastdfe 
+#Activate conda environment and then run python
+conda activate fastdfe
+import fastdfe as fd
+
+ann = fd.Annotator(
+    vcf="for_fastdfe_synon_autosomes_no_XIX.vcf.gz",
+    fasta="stickleback_v5_assembly.fa",
+    annotations=[fd.MaximumLikelihoodAncestralAnnotation(
+        outgroups=["SRR15009118"],
+        n_ingroups=40,
+        n_target_sites=10000000
+    )],
+    output="ML_autosomes.aa.vcf"
+)
+
+ann.annotate()
