@@ -11,7 +11,7 @@ ann = fd.Annotator(
         n_ingroups=40,
         n_target_sites=10000000
     )],
-    output="for_dadi_synon_auto_aa.vcf"
+    output="ML_autosomes.aa.vcf"
 )
 
 ann.annotate()
