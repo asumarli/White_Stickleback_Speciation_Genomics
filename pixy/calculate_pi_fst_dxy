@@ -16,9 +16,19 @@ pixy --stats pi fst dxy \
 --chromosomes 'XIX'
 
 #Y chr
+## Remove heterozygotes from Y vcf and change ploidy to 1
+bcftools filter -e 'GT="0/1"' for_pixy_CB_CL_Y.vcf.gz > for_pixy_CB_CL_Y_no_het.vcf
+bcftools filter -e 'GT="0|1"' for_pixy_CB_CL_Y_no_het.vcf.gz > for_pixy_CB_CL_Y_no_het.vcf
+
+#Change from diploid to haploid
+bcftools +fixploidy for_pixy_CB_CL_Y_no_het.vcf -- -f 1 > for_pixy_CB_CL_Y_no_het_hap.vcf
+
+#Run in pixy
 pixy --stats pi fst dxy \
 --vcf for_pixy_CB_CL_Y_no_het_hap.vcf.gz \
 --populations male_samples.txt \
 --window_size 50000 \
 --n_cores 10 \
 --chromosomes 'Y'
+
+
