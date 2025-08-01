@@ -1,1 +1,20 @@
+#Autosomes 
+# Extract outlier snps from vcf using bed file 
+bcftools view -R PBS_autosome_outliers_for_liftover.txt for_PBS_autosomes_no_XIX.vcf.gz > for_liftover_PBS_outlier_autosomes.vcf
 
+#Liftover using crossmap
+CrossMap vcf v5_to_v1.chain.txt for_liftover_PBS_outlier_autosomes.vcf Gasterosteus_aculeatus.BROADS1.dna_sm.toplevel.fa for_snpeff_PBS_outlier_autosomes.vcf
+
+#Snpeff
+java -Xmx8g -jar snpEff.jar -v -stats annotated_PBS_outlier_autosomes.html BROADS1.105 for_snpeff_PBS_outlier_autosomes.vcf > annotated_PBS_outlier_autosomes.vcf
+
+
+#X chromosome 
+# Extract outlier snps from vcf using bed file 
+bcftools view -R PBS_XIX_outliers_for_liftover.txt for_PBS_autosomes_no_XIX.vcf.gz > for_liftover_PBS_XIX_autosomes.vcf
+
+#Liftover using crossmap
+CrossMap vcf v5_to_v1.chain.txt ../snpEff/for_liftover_PBS_outlier_autosomes.vcf /Users/alexandrasumarli/Desktop/White_sticklebak_wgs_vcfs/Gasterosteus_aculeatus.BROADS1.dna_sm.toplevel.fa for_snpeff_PBS_outlier_autosomes.vcf
+
+#Snpeff
+java -Xmx8g -jar snpEff.jar -v -stats annotated_PBS_outlier_autosomes.html BROADS1.105 /Users/alexandrasumarli/Desktop/White_stickleback_ms_2024/liftover/for_snpeff_PBS_outlier_autosomes.vcf > annotated_PBS_outlier_autosomes.vcf
