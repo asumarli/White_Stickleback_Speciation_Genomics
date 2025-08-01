@@ -1,0 +1,12 @@
+#PCA on deletions and duplications 
+#Autosomes
+./plink --vcf autosomes-smoove.DELDUPgenotyped.anno.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# \
+--make-bed --pca --out CB_CL_CNV
+
+#X chr
+./plink --vcf females-smoove.DELDUPgenotyped.chrXIX.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# \
+--make-bed --pca --out CB_CL_XIX_fem
+
+#Y chr
+./plink --vcf males-smoove.DELDUPgenotyped.chrY.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# \
+--make-bed --pca --out CB_CL_Y_male
