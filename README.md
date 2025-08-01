@@ -9,7 +9,7 @@ This repository contains code and metadata used to analyze data for this project
 * [Population Branch Statistic](PBS/calculate_PBS_plot.R)   
 ### 4. Outlier Analysis
 * [Liftover and Snpeff](PBS/liftover_snpeff)
-* Retrieve Goterms
+* [Retrieve Goterms](PBS/calculate_outlier_intervals_and_retreive_goterms.R)
 ### 5. Demographies
 * PSMC
 * [dadi](dadi) (including file generation: liftover, snpeff, snpsift, ancestral allele annotation)
