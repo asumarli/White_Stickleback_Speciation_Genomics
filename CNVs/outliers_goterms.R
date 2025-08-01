@@ -28,11 +28,7 @@ write.table(white_common_outliers, file = "White_Common_CNV_T_outliers.txt", row
 #Calcualte outlier intervals
 #Load
 library(tidyverse)
-library(biomaRt)
-
-# Read in outliers 
-cnv_outliers <- read.table("hite_Common_CNV_T_outliers.txt", header = TRUE)
-head(cnv_outliers)
+library("rtracklayer")
 
 outlier_intervals <- cnv_outliers %>%
   filter(!is.na(WEIR_AND_COCKERHAM_FST)) %>%
@@ -55,7 +51,7 @@ interval_list_file <- "CNV_outlier_regions.bed"
 interval_list <- import(interval_list_file, format = "bed")
 
 # Read in the gene annotation file
-gene_annotation_file <- "Gasterosteus_aculeatus.GAculeatus_UGA_version5.113.gtf"
+gene_annotation_file <- "stickleback_v5_ensembl_genes.gff3.gz"
 gene_annotation <- import(gene_annotation_file, format = "gff")
 
 # Convert the interval list to a GRanges object
@@ -77,7 +73,7 @@ match_subject_query_info <- function(intersect_df_row){
   query_dat <- gene_annotation_granges[query_index] %>% data.frame %>% select(source, ID, Name)
   
   out_dat <- cbind(subject_dat, query_dat)
-  names(out_dat) <- c("chrom", "pos", "WEIR_AND_COCKERHAM_FST", "gene_source", "gene_ID", "gene_name")
+  names(out_dat) <- c("chrom", "pos", "fst", "gene_source", "gene_ID", "gene_name")
   out_dat
   
 }
@@ -101,20 +97,20 @@ view(hits_df)
 hits_df_summary <- hits_df %>%
   filter(!is.na(gene_name)) %>%
   group_by(gene_name, gene_ID) %>%
-  summarize(n_snps = n(), avg_fst = mean(WEIR_AND_COCKERHAM_FST, na.rm = TRUE)) 
+  summarize(n_snps = n(), avg_fst = mean(fst, na.rm = TRUE)) 
 
 hits_df_summary
 write.table(hits_df_summary, "CNV_autosome_hits_summary.txt", quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
 view(hits_df_summary)
 
 #################
-#Get GO terms for PBS outliers from biomaRt
+#Get GO terms for CNV outliers from biomaRt
 library(tidyverse)
 library(biomaRt)
 
 #Input ensembl IDs from hits list. Gene names are from stickleback v5 assembly.
-ensembl.ids<-read.table("PCNV_autosome_hits_summary.txt", header = FALSE)
-cols<-c("gene_name", "gene_ID", "n_snps", "avg_PBS")
+ensembl.ids<-read.table("CNV_autosome_hits_summary.txt", header = FALSE)
+cols<-c("gene_name", "gene_ID", "n_snps", "avg_fst")
 colnames(ensembl.ids) <-cols
 #ensembl.ids <- ensembl.ids %>%
 #rename("gene_ID" = GeneID)
