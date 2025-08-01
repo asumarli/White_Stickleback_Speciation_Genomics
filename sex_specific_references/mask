@@ -1,5 +1,5 @@
 ############
-#Female Reference. Mask the Y chromosome from stickleback v5 assembly 
+#Female Reference. Mask the Y chr for analyses of females. 
 ############
 
 #Replace ATCG with N after chrY in reference 
@@ -27,7 +27,7 @@ sed -i '' "5704121d" female_ref.fa
 
 
 ############
-##Male Reference: Replace the first 400 kbp on the Y with Ns 
+##Male Reference: Replace the first 400 kbp on the Y with Ns for analyses of males
 ############
 head -c 400000 chrY.fa > PAR.fa
 
