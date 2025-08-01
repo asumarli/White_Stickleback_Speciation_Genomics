@@ -1,10 +1,14 @@
 ###Remove outgroup (G. wheatlandi) from polarized vcf.
 bcftools view -s SRR15009118 ML_autosomes.aa.vcf -o for_dadi_synon_auto_aa.vcf 
 
+################
 ###Generate frequency spectrum from polarized vcf
 dadi-cli GenerateFs --vcf for_dadi_synon_auto_aa.vcf --pop-info pops.txt --pop-ids CB CL --projections 20 20 --output for_dadi_synon_auto_aa.fs
+################
 
+################
 ###Infer demographic modls from allele frequncy spectrum and obtain best fit parameters
+################
 
 ###Models: 
 1.) Ancient Asymmetric Migration 
@@ -51,7 +55,11 @@ dadi-cli InferDM --fs for_dadi_synon_auto_aa.fs --model sym_mig --lbounds 1e-3 1
 dadi-cli InferDM --input-prefix CB_CL.sym_mig_twoepoch.demog.params.InferDM --lbounds 1e-3 1e-3 0 0 0 0 0 --ubounds 5 5 12 12 10 10 .5 --output CB_CL.sym_mig_twoepoch.demog.params --optimizations 200 --global-optimization
 dadi-cli InferDM --fs for_dadi_synon_auto_aa.fs --model sym_mig_twoepoch --lbounds 1e-3 1e-3 0 0 0 0 0 --ubounds 5 5 12 12 10 10 .5 --output CB_CL.sym_mig_twoepoch.demog.params --optimizations 200 --global-optimization
 
+
+################
 ###Perform GIM uncertainty analysis on top three models
+################
+
 #IM Model
 dadi-cli StatDM --fs for_dadi_synon_auto_aa.fs --model IM --demo-popt CB_CL.IM.demog.params.global.InferDM.bestfits --grids 500 510 520 --bootstrapping-dir bootstrap_3mb/ --output CB_CL.IM.bootstrap_3mb.godambe.ci
 
