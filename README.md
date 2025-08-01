@@ -5,7 +5,7 @@ This repository contains code and metadata used to analyze data for this project
 ## 2. Sex-specific references
 ## 3. PCA
 ## 4. Summary Statistics
-* Fst, pi, dxy
+* [Fst, pi, dxy](pixy/calculate_pi_fst_dxy)
 * Population Branch Statistic  
 ## 4. Outlier Analysis
 * Liftover
