@@ -1,4 +1,4 @@
-#######Find overlap between PBS outliers and Genes 
+#######Find overlap between white PBS outliers and Genes 
 library(tidyverse)
 library(biomaRt)
 
