@@ -1,6 +1,6 @@
 #######Find overlap between white PBS outliers and Genes 
 library(tidyverse)
-library(biomaRt)
+library("rtracklayer")
 
 PBS_df <- read.table("PBS/white_PBS_filtered_autosomes_noXIX.txt", header = TRUE)
 head(PBS_df)
@@ -26,7 +26,7 @@ interval_list_file <- "PBS/high_PBS_regions.bed"
 interval_list <- import(interval_list_file, format = "bed")
 
 # Read in the gene annotation file
-gene_annotation_file <- "Gasterosteus_aculeatus.GAculeatus_UGA_version5.113.gtf"
+gene_annotation_file <- "stickleback_v5_ensembl_genes.gff3.gz"
 gene_annotation <- import(gene_annotation_file, format = "gff")
 
 # Convert the interval list to a GRanges object
@@ -80,7 +80,6 @@ view(hits_df_summary)
 
 #################
 #Get GO terms for PBS outliers from biomaRt
-library(tidyverse)
 library(biomaRt)
 
 #Input ensembl IDs from hits list. Gene names are from stickleback v5 assembly.
