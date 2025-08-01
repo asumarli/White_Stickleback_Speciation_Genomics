@@ -6,7 +6,7 @@ This repository contains code and metadata used to analyze data for this project
 ### 3. [PCA](PCA/PCA_plot.R)
 ### 4. Summary Statistics
 * [Fst, pi, dxy in pixy](pixy/calculate_pi_fst_dxy)
-* Fst in vcftools
+* [Fst in vcftools](PBS/calculate_Fst)
 * [Population Branch Statistic](PBS/calculate_PBS_plot.R)   
 ### 4. Outlier Analysis
 * [Liftover and Snpeff](PBS/liftover_snpeff)
