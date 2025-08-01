@@ -15,7 +15,7 @@ This repository contains code and metadata used to analyze data for this project
 * [PSMC](PSMC/generate_input_file)
 * [dadi](dadi) (including file generation: liftover, snpeff, snpsift, ancestral allele annotation)
 ### 6. CNV Analyses
-* Fst/Vst
-* PCA
-* Outlier Analaysis
-* Data Visualization
+* [Fst/Vst](CNVs/Fst_Vst)
+* [PCA](CNVs/deldup_PCA)
+* [Outlier Analaysis](CNVs/outliers_goterms.R)
+
