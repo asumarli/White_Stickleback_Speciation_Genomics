@@ -12,7 +12,7 @@ This repository contains code and metadata used to analyze data for this project
 * Retrieve Goterms
 ## 5. Demographies
 * PSMC
-* dadi (including file generation: liftover, snpeff, snpsift, ancestral allele annotation)
+* [dadi](dadi) (including file generation: liftover, snpeff, snpsift, ancestral allele annotation)
 ## 6. CNV Analyses
 * Fst/Vst
 * PCA
