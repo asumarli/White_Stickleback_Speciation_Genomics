@@ -1,0 +1,41 @@
+# Calculate Fst_Vst on deldup
+#Autosomes. Repeat for X and Y 
+VCF=autosomes-smoove.DELDUPgenotyped.anno.vcf.gz
+
+#Set up populations 
+bcftools query -l $VCF | grep "CL" > CL
+
+bcftools query -l $VCF | grep -e "CB" > CB
+
+#Calculate WC Fst
+vcftools --gzvcf ${VCF} \
+--weir-fst-pop CB \
+--weir-fst-pop CL \
+--out ./CNV_autosomes_CB_CL
+
+#Vst 
+getVst <- function(dat, groups, comparison) {
+
+  groupLevels <- levels(groups)
+
+  dat1 <- na.omit(dat[groups==groupLevels[groupLevels==comparison[1]]])
+
+  dat2 <- na.omit(dat[groups==groupLevels[groupLevels==comparison[2]]])
+
+  Vtotal <- var(c(dat1, dat2))
+
+  Vgroup <- ((var(dat1)*length(dat1)) + (var(dat2)*length(dat2))) /
+
+    (length(dat1)+length(dat2))
+
+  Vst <- c((Vtotal-Vgroup) / Vtotal)
+
+  if (Vst == "NaN" | Vst < 0){
+
+    Vst <- 0
+
+  }
+
+  return(Vst)
+
+}
