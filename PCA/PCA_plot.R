@@ -1,5 +1,6 @@
-####PCA of Autosomes
+####PCA of Autosomes for White, Common, and Quebec outgroup (3 populations)
 #Repeat below for XIX and Y 
+#Repeat for CB and CL locations
 
 #load packages
 library("SNPRelate")
