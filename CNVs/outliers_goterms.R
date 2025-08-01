@@ -1,7 +1,5 @@
 ###Outliers
 ####Autosomes. Repeat for X and Y
-library(tidyverse) 
-library("rtracklayer")
 
 # Read in Fst results
 white_common <- read.table(file = "CNV_autosomes_CB_CL.weir.fst", header = TRUE)
