@@ -1,9 +1,9 @@
-#Calculate PBS and plot genome-wide PBS
+#Calculate PBS for white stickleback and plot genome-wide PBS
 
 library(tidyverse)
 library(stringr)
 
-#Autosomes. Repeat for X and Y. Then combine. 
+#Autosomes. Repeat for X and Y. Then combine. Modify for common PBS and Quebec PBS. 
 # Read in pairwise Fst for each pair. Use fst to calculate T for each pair.
 # First do white_common
 white_common <- read.table(file = "PBS/white_common_fst.txt.weir.fst", header = TRUE)
