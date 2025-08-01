@@ -11,7 +11,7 @@ This repository contains code and metadata used to analyze data for this project
 ## 5. Demographies
 * PSMC
 * dadi
-## 6. CNVs Analyses
+## 6. CNV Analyses
 * Fst/Vst
 * PCA
 * Outlier Analaysis
