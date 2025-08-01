@@ -8,8 +8,8 @@ This repository contains code and metadata used to analyze data for this project
 * [Fst, pi, dxy](pixy/calculate_pi_fst_dxy)
 * [Population Branch Statistic](PBS/calculate_PBS_plot.R)   
 ## 4. Outlier Analysis
-* Liftover
-* Snpeff
+* [Liftover and Snpeff](PBS/liftover_snpeff)
+* Retreive Goterms
 ## 5. Demographies
 * PSMC
 * dadi (including file generation: liftover, snpeff, snpsift, ancestral allele annotation)
