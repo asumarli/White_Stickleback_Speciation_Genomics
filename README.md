@@ -8,9 +8,11 @@ This repository contains code and metadata used to analyze data for this project
 * Fst, pi, dxy
 * Population Branch Statistic  
 ## 4. Outlier Analysis
+* Liftover
+* Snpeff
 ## 5. Demographies
 * PSMC
-* dadi
+* dadi (including file generation: liftover, snpeff, snpsift, ancestral allele annotation)
 ## 6. CNV Analyses
 * Fst/Vst
 * PCA
