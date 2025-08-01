@@ -16,10 +16,10 @@ sed 's/[ATCG]/N/g' chrY.fa > chrY_Ns.fa
 ##Remove the chrY data from reference
 grep -w -B 5704120 '>chrY' stickleback_v5_assembly.fa > no_Y_ref.fa
 
-"chrY" will still remain. Remove it with sed
+"chrY" will still remain. Remove it.
 sed -i '' 's/>chrY//g' no_Y_ref.fa
 
-##Now merge no_Y_ref and chrY_Ns
+##Merge no_Y_ref and chrY_Ns
 sed -n 'p' no_Y_ref.fa chrY_Ns.fa > female_ref.fa
 
 #remove any empty spaces
@@ -45,4 +45,4 @@ sed -n 'p' no_Y_ref.fa chrY_PAR_Ns.fa > male_ref_PAR_Ns.fa
 ##Remove empty spaces
 sed -i '' "5704121d" male_ref_PAR_Ns.fa
 
-Use nano to get rid of some gap on line 5709060
+Use nano to get remove spacing on line 5709060
