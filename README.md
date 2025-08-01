@@ -3,7 +3,7 @@
 This repository contains code and metadata used to analyze data for this project. It includes code for generating:
 ## 1. [Base Map](Map/plot_base_map.R) 
 ## 2. [Sex-specific references](sex_specific_references/mask)
-## 3. PCA
+## 3. [PCA](PCA/PCA_plot.R)
 ## 4. Summary Statistics
 * [Fst, pi, dxy](pixy/calculate_pi_fst_dxy)
 * [Population Branch Statistic](PBS/calculate_PBS_plot.R)   
