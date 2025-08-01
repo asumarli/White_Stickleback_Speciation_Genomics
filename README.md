@@ -5,7 +5,8 @@ This repository contains code and metadata used to analyze data for this project
 ### 2. [Sex-specific references](sex_specific_references/mask)
 ### 3. [PCA](PCA/PCA_plot.R)
 ### 4. Summary Statistics
-* [Fst, pi, dxy](pixy/calculate_pi_fst_dxy)
+* [Fst, pi, dxy in pixy](pixy/calculate_pi_fst_dxy)
+* Fst in vcftools
 * [Population Branch Statistic](PBS/calculate_PBS_plot.R)   
 ### 4. Outlier Analysis
 * [Liftover and Snpeff](PBS/liftover_snpeff)
