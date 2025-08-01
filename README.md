@@ -12,7 +12,7 @@ This repository contains code and metadata used to analyze data for this project
 * [Liftover and Snpeff](PBS/liftover_snpeff)
 * [Retrieve Goterms](PBS/calculate_outlier_intervals_and_retreive_goterms.R)
 ### 5. Demographies
-* PSMC
+* [PSMC](PSMC/generate_input_file)
 * [dadi](dadi) (including file generation: liftover, snpeff, snpsift, ancestral allele annotation)
 ### 6. CNV Analyses
 * Fst/Vst
