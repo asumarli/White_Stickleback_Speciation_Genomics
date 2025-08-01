@@ -1,5 +1,9 @@
 ###Calculate WC Fst in vcftools for autosomes, XIX, and Y for white, common, and Quebec outgroup population
-#Autosomes
+
+#################
+####Autosomes
+#################
+
 #white_common
 vcftools --gzvcf for_PBS_autosomes_no_XIX.vcf.gz --weir-fst-pop white.txt --weir-fst-pop common.txt --out white_common --out white_common_fst.txt
 
@@ -9,14 +13,27 @@ vcftools --gzvcf for_PBS_autosomes_no_XIX.vcf.gz --weir-fst-pop white.txt --weir
 #Quebec_common
 vcftools --gzvcf for_PBS_autosomes_no_XIX.vcf.gzz --weir-fst-pop Quebec.txt --weir-fst-pop common.txt --out Quebec_common --out Quebec_common_fst.txt
 
-#X chr. Females only
+#################
+####X chr. Females only
+#################
+
 vcftools --gzvcf for_PBS_filt_chrXIX_fem.vcf.gz --weir-fst-pop white_fem.txt --weir-fst-pop common_fem.txt --out white_common --out white_common_fst_XIX_fem
 
 vcftools --gzvcf for_PBS_filt_chrXIX_fem.vcf.gz --weir-fst-pop white_fem.txt --weir-fst-pop Quebec_fem.txt --out white_Quebec --out white_Quebec_fst_XIX_fem
 
 vcftools --gzvcf for_PBS_filt_chrXIX_fem.vcf.gz --weir-fst-pop Quebec_fem.txt --weir-fst-pop common_fem.txt --out Quebec_common --out Quebec_common_fst_XIX_fem
 
-#Y chr. Males only
+#################
+###Y chr. Males only. 
+#################
+
+## Remove heterozygotes from Y vcf and change ploidy to 1
+bcftools filter -e 'GT="0/1"' PBS_chrY_022025.vcf.gz > PBS_chrY_022025_no_het.vcf.gz
+bcftools filter -e 'GT="0|1"' PBS_chrY_022025_no_het.vcf.gz > PBS_chrY_022025_no_het.vcf.gz
+
+bcftools +fixploidy PBS_chrY_022025_no_het.vcf.gz -- -f 1 > PBS_chrY_022025_no_het_hap.vcf
+
+# Calculate fst. Specify "haploid". 
 vcftools --vcf PBS_chrY_022025_no_het_hap.vcf --weir-fst-pop PBS_white_males.txt --weir-fst-pop PBS_common_males.txt --haploid --out white_common --out white_common_fst_Y_male
 
 vcftools --vcf PBS_chrY_022025_no_het_hap.vcf --weir-fst-pop PBS_white_males.txt --weir-fst-pop PBS_Quebec_males.txt --haploid --out white_Quebec --out white_Quebec_fst_Y_male
