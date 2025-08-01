@@ -5,17 +5,53 @@ bcftools view -s SRR15009118 ML_autosomes.aa.vcf -o for_dadi_synon_auto_aa.vcf
 dadi-cli GenerateFs --vcf for_dadi_synon_auto_aa.vcf --pop-info pops.txt --pop-ids CB CL --projections 20 20 --output for_dadi_synon_auto_aa.fs
 
 #Infer demographic modls from allele frequncy spectrum and obtain best fit parameters
-#Ancestral Asymmetric Migration model 
+
+#Models: 
+1.) Ancient Asymmetric Migration 
 dadi-cli BestFit --input-prefix CB_CL.anc_asym_mig.demog.params.InferDM --lbounds 1e-3 1e-3 0 0 0 0 0 --ubounds 5 5 12 12 10 10 .5
 dadi-cli InferDM --fs for_dadi_synon_auto_aa.fs --model anc_asym_mig --lbounds 1e-3 1e-3 0 0 0 0 0 --ubounds 5 5 12 12 10 10 .5 --output CB_CL.anc_asym_mig.demog.params --optimizations 200 --global-optimization
 
-#Ancestral Symmetric Migration
+2.) Ancient Symmetric Migration
 # dadi-cli BestFit --input-prefix CB_CL.anc_sym_mig.demog.params.InferDM --lbounds 1e-3 1e-3 0 0 0 0 --ubounds 5 10 12 10 10 .5
 # dadi-cli InferDM --fs for_dadi_synon_auto_aa.fs --model anc_sym_mig --lbounds 1e-3 1e-3 0 0 0 0 --ubounds 5 10 12 10 10 .5 --output CB_CL.anc_sym_mig.demog.params --optimizations 200 --global-optimization
 
-#Asymmetric Migration
+3.) Asymmetric Migration
 dadi-cli BestFit --input-prefix CB_CL.asym_mig.demog.params.InferDM --lbounds 1e-3 1e-3 0 0 0 0 --ubounds 5 7 12 15 10 .5
 dadi-cli InferDM --fs for_dadi_synon_auto_aa.fs --model asym_mig --lbounds 1e-3 1e-3 0 0 0 0 --ubounds 5 7 12 15 10 .5 --output CB_CL.asym_mig.demog.params --optimizations 200 --global-optimization
 
-#
+4.) Asymmetric Migration two epochs
+dadi-cli BestFit --input-prefix CB_CL.asym_mig_twoepoch.demog.params.InferDM --lbounds 1e-3 1e-3 0 0 0 0 0 0 0 --ubounds 5 5 12 12 12 12 10 10 .5
+dadi-cli InferDM --fs input_sfs/for_dadi_synon_auto_aa.fs --model asym_mig_twoepoch --lbounds 1e-3 1e-3 0 0 0 0 0 0 0 --ubounds 5 5 12 12 12 12 10 10 .5 --output CB_CL.asym_mig_twoepoch.demog.params --optimizations 200 --global-optimization
+
+5.) Isolation Migration 
+dadi-cli BestFit --input-prefix CB_CL.IM.demog.params.InferDM --lbounds 1e-3 1e-3 1e-3 0 0 0 0 --ubounds .5 12 20 10 15 10 .5
+dadi-cli InferDM --fs for_dadi_synon_auto_aa.fs --model IM --lbounds 1e-3 1e-3 1e-3 0 0 0 0 --ubounds .5 12 20 10 15 10 .5 --output CB_CL.IM.demog.params --optimizations 200 --global-optimization
+
+6.) Neutral
+dadi-cli BestFit --input-prefix CB_CL.snm_2d.demog.params.InferDM --lbounds 0 --ubounds 100
+dadi-cli InferDM --fs for_dadi_synon_auto_aa.fs --model snm_2d --lbounds 0 --ubounds 100 --output CB_CL.snm_2d.demog.params --optimizations 200
+
+7.) Strict Isolation
+dadi-cli BestFit --input-prefix CB_CL.no_mig.demog.params.InferDM --lbounds 1e-3 1e-3 0 0 --ubounds 10 20 20 .5
+dadi-cli InferDM --fs for_dadi_synon_auto_aa.fs --model no_mig --lbounds 1e-3 1e-3 0 0 --ubounds 10 20 20 .5 --output CB_CL.no_mig.demog.params --optimizations 200 --global-optimization
+
+8.) Secondary Contact Asymmetric Migration
+dadi-cli BestFit --input-prefix for_dadi CB_CL.sec_contact_asym_mig.demog.params.InferDM --lbounds 1e-3 1e-3 0 0 0 0 0 --ubounds 7 10 12 12 10 10 .5 
+dadi-cli InferDM --fs for_dadi_synon_auto_aa.fs --model sec_contact_asym_mig --lbounds 1e-3 1e-3 0 0 0 0 0 --ubounds 7 10 12 12 10 10 .5 --output rdadi_synon_auto_aa/CB_CL.sec_contact_asym_mig.demog.params --optimizations 200 --global-optimization
+
+9.) Secondary Contact Symmetric Migration
+dadi-cli BestFit --input-prefix CB_CL.sec_contact_sym_mig.demog.params.InferDM --lbounds 1e-3 1e-3 0 0 0 0 --ubounds 5 7 12 10 10 .5
+dadi-cli InferDM --fs for_dadi_synon_auto_aa.fs --model sec_contact_sym_mig --lbounds 1e-3 1e-3 0 0 0 0 --ubounds 5 7 12 10 10 .5 --output CB_CL.sec_contact_sym_mig.demog.params --optimizations 200 --global-optimization
+
+10.) Symmetric Migration
+dadi-cli BestFit --input-prefix CB_CL.sym_mig.demog.params.InferDM --lbounds 1e-3 1e-3 0 0 0 --ubounds 10 10 12 10 .5
+dadi-cli InferDM --fs for_dadi_synon_auto_aa.fs --model sym_mig --lbounds 1e-3 1e-3 0 0 0 --ubounds 10 10 12 10 .5 --output CB_CL.sym_mig.demog.params --optimizations 200 --global-optimization
+
+11.) Symmetric Migration two epochs
+dadi-cli InferDM --input-prefix CB_CL.sym_mig_twoepoch.demog.params.InferDM --lbounds 1e-3 1e-3 0 0 0 0 0 --ubounds 5 5 12 12 10 10 .5 --output CB_CL.sym_mig_twoepoch.demog.params --optimizations 200 --global-optimization
+dadi-cli InferDM --fs for_dadi_synon_auto_aa.fs --model sym_mig_twoepoch --lbounds 1e-3 1e-3 0 0 0 0 0 --ubounds 5 5 12 12 10 10 .5 --output CB_CL.sym_mig_twoepoch.demog.params --optimizations 200 --global-optimization
+
+
+
+
 
