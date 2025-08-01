@@ -17,5 +17,5 @@ This repository contains code and metadata used to analyze data for this project
 ### 6. CNV Analyses
 * [Fst/Vst](CNVs/Fst_Vst)
 * [PCA](CNVs/deldup_PCA)
-* [Outlier Analaysis](CNVs/outliers_goterms.R)
+* [Outlier Analysis](CNVs/outliers_goterms.R)
 
