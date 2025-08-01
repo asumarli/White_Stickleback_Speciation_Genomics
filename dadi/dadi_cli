@@ -1,2 +1,6 @@
 #Remove outgroup (G. wheatlandi) from polarized vcf.
-for_dadi_synon_auto_aa.vcf 
+bcftools view -s SRR15009118 ML_autosomes.aa.vcf -o for_dadi_synon_auto_aa.vcf 
+
+#Generate frequency spectrum from polarized vcf
+dadi-cli GenerateFs --vcf for_dadi_synon_auto_aa.vcf --pop-info pops.txt --pop-ids CB CL --projections 20 20 --output for_dadi_synon_auto_aa.fs
+ 
