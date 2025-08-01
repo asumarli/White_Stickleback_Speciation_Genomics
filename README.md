@@ -1,6 +1,6 @@
 # **Strong but diffuse genetic divergence underlies differentiation in an incipient species of marine stickleback**
 
-This repository contains code and metadata used to analyze data in this project. It includes code for generating:
+This repository contains code and metadata used to analyze data for this project. It includes code for generating:
 ## 1. Base Map
 ## 2. Sex-specific references
 ## 3. PCA
