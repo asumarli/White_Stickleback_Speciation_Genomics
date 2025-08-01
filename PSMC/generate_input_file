@@ -4,13 +4,15 @@
 samtools view MCL13_S4_L002-1.bam chrI chrII chrIII chrIV chrV chrVI chrVII chrVIII chrIX chrX chrXI chrXII chrXIII chrXIV chrXV chrXVI chrXVII chrXVIII chrXIX chrXX chrXXI chrUn -b > MCL13_S4_L002_autosomes.bam
 
 #Generate input files for PSMC
-bcftools mpileup -C50 -f ~/bigdata/grenepipe_test/male_ref_PAR_Ns.fa MCL13_S4_L002_autosomes.bam | bcftools call -c - | vcfutils.pl vcf2fq -d 30 -D 72 | gzip $
-  
-~/bigdata/PSMC/psmc/utils/fq2psmcfa -q20 MCL13_S4.fq.gz > MCL13_S4.psmcfa
+bcftools mpileup -C50 -f MCL13_S4_L002_autosomes.bam | bcftools call -c - | vcfutils.pl vcf2fq -d 30 -D 72 | gzip $
+fq2psmcfa -q20 MCL13_S4.fq.gz > MCL13_S4.psmcfa
 
-# Run PSMC using default settings and plot
-~/bigdata/PSMC/psmc/./psmc -N25 -t15 -r5 -p "4+25*2+4+6" -o MCL13_S4.psmc MCL13_S4.psmcfa
-~/bigdata/PSMC/psmc/utils/psmc_plot.pl -u 3.7e-8 -g 1 -R -p MCL13_S4_plot MCL13_S4.psmc
+#Bootstraping
+splitfa MCL13_S4.psmcfa > split.psmcfa
+psmc/./psmc -N25 -t15 -r5 -p "4+25*2+4+6" -o MCL13_S4.psmc MCL13_S4.psmcfa
+seq 30 | xargs -i echo psmc/./psmc -N25 -t15 -r5 -b -p "4+25*2+4+6" -o round-{}.psmc split.psmcfa | sh
+cat MCL13_S4.psmc round-*.psmc > MCL13_S4_bs_combined.psmc
+psmc/utils/psmc_plot.pl -u 3.7e-8 -g 1 -R -p MCL13_S4_bs_combined_plot MCL13_S4_bs_combined.psmc
 
-#Repeat for the other 3 individuals. 
+#Repeat for FCB66_S37, FCL112_S16, and MCB34_S30
 
