@@ -1,0 +1,50 @@
+#Generate input files for PBS
+###Autosomes
+#Filter in vcf tools. Parameters chosen based on graphs.
+while read vcf
+do
+vcftools --gzvcf $vcf \
+--minQ 30 \
+--max-missing 0.9 \
+--min-meanDP 4 \
+--max-meanDP 50 \
+--minDP 4 \
+--maxDP 50 \
+--maf 0.05 \
+--recode --stdout > snpfiltR_$vcf
+done < vcf.list
+
+#Now concatenate the autosomes
+bcftools concat -o snpfiltR_autosomes.vcf.gz -f autosomes.list
+#Read into snpfiltR and remove any individuals with low depth/high missing data
+
+###XIX. Prior to this samples with low depth/high missing data have been removed
+vcftools --gzvcf low_samp_rm_PBS_chrXIX.vcf.gz \
+--minQ 30 \
+--max-missing 0.90 \
+--min-meanDP 12 \
+--max-meanDP 52 \
+--minDP 12 \
+--maxDP 52 \
+--maf 0.05 \
+--max-alleles 2 \
+--min-alleles 2 \
+--remove-indels \
+--recode --stdout > for_PBS_filt_chrXIX_fem.vcf
+
+###Ychr
+# Allow for more missing data on the Y for PBS and then change to no het and only haploid. Then do PCA. 
+#>0.1 refers to removing any samples missing more than .1% data. Prior to this samples were visualized in snpfiltR
+
+vcftools --gzvcf chrY_PBS_prop\>0.1_removed.vcf.gz \
+--remove-indels \
+--minQ 30 \
+--max-missing 0.8 \
+--min-meanDP 5 \
+--max-meanDP 37 \
+--minDP 5 \
+--maxDP 37 \
+--maf 0.05 \
+--max-alleles 2 \
+--min-alleles 2 \
+--recode --stdout | gzip -c > PBS_chrY_022025.vcf.gz
