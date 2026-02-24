@@ -1,4 +1,8 @@
-#Generate input files for pixy from all-sites vcfs
+#Generate input files from all-sites vcfs of CB and CL populations. 
+#vcfs used in:
+#1.) pixy: fst, pi, dxy
+#2.) PCA of CB, CL
+#3.) PSMC, dadi 
 
 ###AUTOSOMES
 
@@ -23,7 +27,7 @@ bcftools concat -o invar_for_pixy_autosomes_CB_CL_010526.vcf.gz -f invar_autosom
 
 
 #Variant sites
-#Same as above but includes qual filter
+#Same as above but includes qual filter. 
 
 while read vcf
 do
