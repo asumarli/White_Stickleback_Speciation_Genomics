@@ -1,0 +1,135 @@
+#Generate input files for pixy from all-sites vcfs
+
+###AUTOSOMES
+
+#Invariant sites
+#Do not include qual filter.
+
+while read vcf
+do
+vcftools --gzvcf $vcf \
+--remove-indels \
+--max-maf 0 \
+--max-missing 0.95 \
+--min-meanDP 30 \
+--max-meanDP 72 \
+--minDP 30 \
+--maxDP 72 \
+--recode --stdout | gzip -c > filt_$vcf
+done < raw_vcfs.list
+
+#Combine all the autosomes
+bcftools concat -o invar_for_pixy_autosomes_CB_CL_010526.vcf.gz -f invar_autosomes.list
+
+
+#Variant sites
+#Same as above but includes qual filter
+
+while read vcf
+do
+vcftools --gzvcf $vcf \
+--max-maf 0 \
+--minQ 30 \
+--max-missing 0.95 \
+--min-meanDP 30 \
+--max-meanDP 72 \
+--minDP 30 \
+--maxDP 72 \
+--recode --stdout > filt_$vcf
+done < raw_vcfs.list
+
+## index both vcfs using tabix
+tabix invar_for_pixy_autosomes_CB_CL_031824.vcf.gz
+tabix filt_for_pixy_autosomes_CB_CL_020825.vcf.gz
+
+# combine the two VCFs using bcftools concat
+bcftools concat \
+--allow-overlaps \
+filt_for_pixy_autosomes_CB_CL_020825.vcf.gz invar_for_pixy_autosomes_CB_CL_010526.vcf.gz \
+-O z -o for_pixy_CB_CL_autosomes_010526.vcf.gz
+
+
+###Y_chr
+#Invar sites first
+vcftools --gzvcf CB_CL_chrY_complete.vcf.gz \
+--remove-indels \
+--max-maf 0 \
+--max-missing 0.90 \
+--min-meanDP 10 \
+--max-meanDP 38 \
+--minDP 10 \
+--maxDP 38 \
+--recode --stdout > filt_invar_chrY.vcf
+
+#bgzip
+bgzip filt_invar_chrY.vcf
+
+#Var sites
+vcftools --gzvcf CB_CL_chrY_complete.vcf.gz \
+--maf 0.05 \
+--minQ 30 \
+--max-missing 0.90 \
+--min-meanDP 10 \
+--max-meanDP 38 \
+--minDP 10 \
+--maxDP 38 \
+--max-alleles 2 \
+--min-alleles 2 \
+--remove-indels \
+--recode --stdout > filt_var_chrY.vcf
+
+#bgzip
+bgzip filt_var_chrY.vcf
+
+## index both vcfs using tabix
+tabix filt_invar_chrY.vcf.gz -f
+tabix filt_var_chrY.vcf.gz
+
+# combine the two VCFs using bcftools concat
+bcftools concat \
+--allow-overlaps \
+filt_invar_chrY.vcf.gz filt_var_chrY.vcf.gz \
+-O z -o for_pixy_CB_CL_Y.vcf.gz
+
+
+###XIX_chr
+#Invariant sites first
+vcftools --gzvcf CB_CL_chrXIX_complete.vcf.gz \
+--remove-indels \
+--max-maf 0 \
+--max-missing 0.90 \
+--min-meanDP 30 \
+--max-meanDP 66 \
+--minDP 30 \
+--maxDP 66 \
+--recode --stdout > filt_invar_chrXIX.vcf
+
+#bgzip
+bgzip filt_invar_chrXIX.vcf
+
+#Var sites
+vcftools --gzvcf CB_CL_chrXIX_complete.vcf.gz \
+--maf 0.05 \
+--minQ 30 \
+--max-missing 0.90 \
+--min-meanDP 30 \
+--max-meanDP 66 \
+--minDP 30 \
+--maxDP 66 \
+--max-alleles 2 \
+--min-alleles 2 \
+--remove-indels \
+--recode --stdout > filt_var_chrXIX.vcf
+
+#bgzip
+bgzip filt_var_chrXIX.vcf
+
+## index both vcfs using tabix
+tabix filt_var_chrXIX.vcf.gz -f
+tabix filt_invar_chrXIX.vcf.gz
+
+# combine the two VCFs using bcftools concat
+bcftools concat \
+--allow-overlaps \
+filt_invar_chrXIX.vcf.gz filt_var_chrXIX.vcf.gz \
+-O z -o for_pixy_CB_CL_XIX_fem.vcf.gz
